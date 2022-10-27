@@ -1,0 +1,29 @@
+http://localhost:8000 (app available at)
+
+http://localhost:8001/Tables (Integrated development environment)
+
+-----------------------------
+
+--TERMINAL (update Postgres Database)
+
+make dumpdb
+
+------------------------------
+.yml
+
+
+on: [push]
+name: build
+jobs:
+  runhaskell:
+    name: Hello World
+    runs-on: ubuntu-latest # or macOS-latest, or windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-haskell@v1.1
+        with:
+          ghc-version: '8.8.3' # Exact version of ghc to use
+          # cabal-version: 'latest'. Omitted, but defalts to 'latest'
+          enable-stack: true
+          stack-version: 'latest'
+      - run: runhaskell Hello.hs

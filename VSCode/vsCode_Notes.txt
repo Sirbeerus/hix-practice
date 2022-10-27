@@ -1,0 +1,10 @@
+Toggle Integrated Terminal
+
+    Ctrl + `
+
+-----------------
+
+How to enter Zen Mode in VSCode:
+
+    Press Cmd + Shift + P (Mac) 
+           >zen

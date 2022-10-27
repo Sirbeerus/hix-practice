@@ -1,0 +1,1 @@
+https://subscription.packtpub.com/book/big-data-and-business-intelligence/9781783286331/1/ch01lvl1sec19/using-mongodb-queries-in-haskell

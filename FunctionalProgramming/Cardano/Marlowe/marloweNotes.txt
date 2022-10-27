@@ -1,0 +1,43 @@
+--MARLOWE
+
+Wallet nickname:
+marloweTestWallet
+
+Demo wallet ID
+a1491434-0c56-4f73-b00e-aab3190c9162
+
+-------------------------------------------------
+
+*give more time to nested contracts
+*assume buyerChoice first (buyer makes a choice first)
+----------------------------------------------------
+
+When [Case (Deposit "to" "from" <Native Asset> Constant :: Int (Value to be deposited)]
+
+-----------------------------------------------------
+
+*Each Marlowe contract has a currency symbol for its roles and a payout validator script for receiving and disbursing payments to participants.
+
+*Participants typically interact with Marlowe contracts by including a role token in transactions that the participant authorizes.
+Role tokens are a concatenation of the currency symbol and the role name as the token name.
+
+*Participants withdraw funds from a special payout script using their role token.
+The payout Plutus script is unique to each role currency symbol.
+The datum at the payout address is simply the token name for the participant that is allowed to spend that UTxO.
+The redeemer for spending from the payout script is empty.
+
+*Roles provide a flexible and secure way for participants to interact with Marlowe.
+
+*Role tokens can be transferred from one wallet to another.
+
+----------------------------------------------------------
+
+Merkleization
+
+a lengthy Marlowe contract will not fit in a transaction.
+
+where only the immediately needed part of the contract is stored in the contract's most recent transaction on the blockchain.
+The continuation of the contract in Case statements is referenced securely by the hash of that continuation.
+When a choice is made that would necessitate executing that continuation, it is provided as input to the transaction and the Marlowe validator verifies that its hash matches the hash required by the on-chain contract.
+
+-----------------------------------------------

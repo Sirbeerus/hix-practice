@@ -1,0 +1,43 @@
+--snapshot for policy id
+
+select count(distinct tx_out.address) from multi_asset as ma
+                        JOIN (SELECT mto.id,mto.ident,mto.tx_out_id from ma_tx_out mto inner join 
+                        (SELECT MAX(mto.id),mto.ident from ma_tx_out mto inner join multi_asset ma on mto.ident=ma.id and ma.policy='\\x{pol}' group by mto.ident) mto2 on mto.id=mto2.max ) mto
+                        ON ma.id = mto.ident
+                        JOIN tx_out
+                        ON mto.tx_out_id = tx_out.id
+                        JOIN stake_address
+                        ON tx_out.stake_address_id = stake_address.id
+                        WHERE ma.policy = '\\x{pol}'
+---------------------
+
+--address with number of assets owned
+
+SELECT
+    tx_out.address, count(1)
+FROM
+    multi_asset AS ma
+    JOIN (
+        SELECT
+            mto.id,
+            mto.ident,
+            mto.tx_out_id
+        FROM
+            ma_tx_out mto
+            INNER JOIN (
+                SELECT
+                    MAX(mto.id),
+                    mto.ident
+                FROM
+                    ma_tx_out mto
+                    INNER JOIN multi_asset ma ON mto.ident = ma.id
+                        AND ma.policy = '\x{policy_id}'
+                    GROUP BY
+                        mto.ident) mto2 ON mto.id = mto2.max) mto ON ma.id = mto.ident
+JOIN tx_out ON mto.tx_out_id = tx_out.id
+JOIN stake_address ON tx_out.stake_address_id = stake_address.id
+WHERE
+    ma.policy = '\x{policy_id}'
+GROUP BY tx_out.address 
+
+

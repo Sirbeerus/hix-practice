@@ -1,0 +1,1 @@
+https://stackoverflow.com/a/34096735/332913 (parsing json text with haskell)

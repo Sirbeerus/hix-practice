@@ -1,0 +1,17 @@
+--Terminal (~/plutip Testnet)
+ 
+nix build .#plutip:exe:local-cluster  
+./result/bin/local-cluster -n 2
+
+---------------------------------------
+http://localhost:8080
+------------
+
+Wallet 1 PKH: 1199621350fb8da7195790355641cc55b165a7ff6ea8ab4895f03d68
+Wallet 1 mainnet address: "addr1vygejcsn2racmfce27gr24jpe32mzed8lah2326gjhcr66qvljfjv"
+Wallet 2 PKH: d3a3058cab5ff1c24bf225a182e7c19786a15251814fbd57452b4ae2
+Wallet 2 mainnet address: "addr1v8f6xpvv4d0lrsjt7gj6rqh8cxtcdg2j2xq5l02hg5454cs6ckp8s"
+Node socket: CardanoNodeConn "/private/var/folders/c9/g6hkh55d4q5bhtl3h7r_pg6h0000gn/T/test-cluster51363/pool-1/node.socket"
+
+------------
+

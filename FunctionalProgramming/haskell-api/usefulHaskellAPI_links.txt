@@ -1,0 +1,45 @@
+https://dev.to/csaltos/haskell-http-response-either-4ncg
+
+https://hackage.haskell.org/package/aeson-2.1.0.0/docs/Data-Aeson.html
+
+https://rapidapi.com/collection/list-of-free-apis (free public api for devs)
+
+https://thoughtbot.com/blog/a-rest-api-with-haskell-and-snap
+
+https://github.com/PostgREST/postgrest
+
+https://youtu.be/q-fKS6yV9Us
+
+JPG.Store
+---
+Welcome to the api-updates channel! 
+
+Active Endpoints
+Sales Endpoint: https://server.jpgstoreapis.com/policy/[POLICYIDHERE]/sales?page=1
+Listings Endpoint: https://server.jpgstoreapis.com/policy/[POLICYIDHERE]/listings?page=1
+Verified Endpoint: https://server.jpgstoreapis.com/policy/verified?page=1
+
+--------
+ https://medium.com/@russmatney/haskell-lens-operator-onboarding-a235481e8fac (layman lens api explanation)
+
+http://silkapp.github.io/rest/tutorial.html
+
+https://github.com/dmjio/miso/tree/master (miso)
+
+http://yannesposito.com/Scratch/en/blog/Yesod-tutorial-for-newbies/#navigation 
+
+https://stackoverflow.com/questions/15866765/haskell-library-for-http-communication
+
+https://www.philipzucker.com/doing-basic-ass-stuff-in-haskell/
+
+https://docs.servant.dev/en/stable/tutorial/ApiType.html (servant)
+
+https://www.reddit.com/r/haskell/comments/3a4qrl/libraryframework_suggestions_for_a_rest_api_in/?utm_medium=android_app&utm_source=share (servant)
+
+https://youtu.be/gMDiKOuwLXw (servant)
+
+https://www.tangocrypto.com/api-reference/#/operations/list-address-assets (json endpoint cardano)
+
+https://github.com/ekmett/lens/wiki/Operators (lens operators cheatsheet) 
+
+https://github.com/fullstack-development/developers-roadmap/blob/master/backend/middle-1/haskell.md#lenses

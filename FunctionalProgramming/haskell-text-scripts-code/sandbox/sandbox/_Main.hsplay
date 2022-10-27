@@ -1,0 +1,154 @@
+-- Haskell Playground 1.0
+batAvgRating 20 100
+batAvgRating 30 100
+
+
+
+getListItems [1,2,3,4,5]
+
+
+getFirstItem "Hello"
+
+multBy4 [1,2,3,4]
+
+areStringsEq "Hello" "Hello"
+
+areStringsEq "Hello" "Goodbye"
+
+
+num3Times4
+
+
+:t factorial
+
+factorial 5
+
+[2*n | n <- example , isEven n, n > 3 ]
+
+:t isEven
+
+
+
+
+
+
+
+
+
+
+gcd' 16 6
+
+16 `rem` 6
+
+gcd'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sumElts [1,2,3,4]
+
+
+oddElements [2,4,2,4,2]
+
+
+
+
+
+
+
+
+init [1,2,4,5,6]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

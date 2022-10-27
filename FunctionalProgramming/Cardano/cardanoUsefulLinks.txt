@@ -1,0 +1,12 @@
+https://www.youtube.com/watch?v=XVHwWEbExOo&t=1547s
+
+
+https://developers.cardano.org/docs/transaction-metadata/how-to-create-a-metadata-transaction-cli/  (advanced cli txs)
+
+https://docs.cardano.org/native-tokens/getting-started (advanced cli txs)
+
+https://www.freeloaderz.io/freeloaderz  (spo relay alternative?)
+
+https://www.canonicalllc.com/post/a-deep-dive-into-the-new-v2-jpg-store-smart-contract (v2 explanation)
+
+https://github.com/Canonical-LLC/jpg-store-contract-v2 (animation/jpeg reference)

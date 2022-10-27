@@ -1,0 +1,168 @@
+--CARDANO(making api)
+
+Have Daedalus and plugin wallet ready
+
+--next Mac OS binaries
+mkdir -p ~/.local/bin, all my files are in this path
+downloaded all the mac binaries and put them in that dir
+from https://hydra.iohk.io/build/12106182/download/1/cardano-node-1.33.0-macos.tar.gz
+and put this config file in there too https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+i had to set permissions on them after that
+xattr -d com.apple.quarantine *
+xattr -d com.apple.quarantine configuration/*
+in my ~/.zshrc file, i added this:
+export CARDANO_NODE_SOCKET_PATH=~/Library/Application\ Support/Daedalus\ Mainnet/cardano-node.socket
+i added this line after it
+export PATH="$HOME/.local/bin/:$PATH"
+opened a new iterm or terminal tab to get all the settings loaded and then ran this
+cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.txt --port 8090
+
+**mine  cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.yaml --port 8090
+
+
+
+oh you don't have wget installed, ok we'll try curl
+curl -O https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+
+Text editor-- now enter
+
+in my ~/.zshrc file, i added this:
+export CARDANO_NODE_SOCKET_PATH=~/Library/Application\ Support/Daedalus\ Mainnet/cardano-node.socket
+i added this line after it
+export PATH="$HOME/.local/bin/:$PATH"
+save and close the file
+
+#export CARDANO_NODE_SOCKET_PATH=~/Library/Application\ Support/Daedalus\ Mainnet/cardano-node.socket
+#export PATH="$HOME/.local/bin/:$PATH"  save n quit
+
+In terminal ... source ~/.zshrc
+source tells the terminal to read those settings
+
+cardano-submit-api to see if it is available to us
+
+perfect
+
+cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.yaml --port 8090
+
+
+
+(Moving api files**)
+
+gary — 01/25/2022
+cd ~/Downloads/cardano[TAB] (hit tab key not type [TAB])
+it should type out cardano-node-whatever for you
+should end up in ~/Downloads/cardano-node-1.33.0-macos
+
+there's all your files
+cp -R * ~/.local/bin  copy all the files from here to that local bin dir
+
+
+
+------------------------------------------------------------------------------
+July 12th, 2022 AD
+
+Transaction Hash
+2ce03b0d1040570f5e34a37d2cb42daebaa2e221c0d2567f67b649462e27cb15
+From
+
+    dd37da165c7c5128eb06d13bf0b401549ed02571f6f4555c45dbfa95fb8491af#0
+
+To
+
+    addr1q8r8q8dz0jwfl97n9g4csrumf0pqfzekqerr2jjyyx9mr86uma3tepr03yfp72j0v739zmyxmw9wa4c9aefd5an2y2as0qej2h
+
+    0.999978 ₳
+
+    addr1x8dqdh9xftn4hezexyqpf5xsa04wvv3tz9kdkcpuhepxcvk6qmw2vjh8t0j9jvgqzngdp6l2ucezkytvmdsre0jzdseqmtmtx7
+
+    2.809221 ₳
+    Fee:0.190801 ₳
+
+Message
+
+Test transaction for ZCC DAO Wallet
+Script Details
+Require all to spend
+
+Signature
+0b6ff31501528dacee9c0e7b08cbc6ce8eeaaa2bf11af191a6a55a4c
+Signature
+741fd44debef69d28f268fbe5efd1bcbafabaee25f923fe6164ee8a2
+Signature
+0b1f03d0caa07e2a094c891ab66cc14c3e2847071140f51e02c52a29
+Signature
+b281f367549976f22ff4628d40412ac5c2d96b73d1e592b062569395
+
+I just read a lot of docs https://docs.cardano.org/ and then ctrl+f the discord and search things I I need answers. The docs aren't ever updated for PlutusV2 though.
+
+https://github.com/input-output-hk/Alonzo-testnet/tree/main/Alonzo-solutions
+
+---------
+I get the slot like that $(cardano-cli query tip --mainnet | jq -r '.slot')
+[1:47 PM]
+$(( ${currentSlot} + 10000))
+----------------------------------------------
+
+--Getting Started
+
+1) Download 
+
+https://cloud.google.com/cloud-console/?utm_source=google&utm_medium=cpc&utm_campaign=emea-gb-all-en-dr-bkws-all-all-trial-e-gcp-1011340&utm_content=text-ad-none-any-DEV_m-CRE_574560852474-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20Management%20Tools%20~%20Cloud%20Console%23v1-KWID_43700072600426087-kwd-131969947466-userloc_9046004&utm_term=KW_google%20console-NET_g-PLAC_&gclid=CjwKCAjwm8WZBhBUEiwA178UnIf8O7XFWeyWOw-NXFpTBjIar1017sIWqiqzGlG3h6tpQqUOZp-RpBoChYAQAvD_BwE&gclsrc=aw.ds
+
+2) install Ubuntu on virtual cloud
+
+https://cardano-node-installation.stakepool247.eu/installing-ubuntu-on-google-cloud-platform
+
+3) install cardano cli/node using Ubuntu
+
+https://cardano-node-installation.stakepool247.eu/cardano-node-installation-and-configuration-guide/creating-a-user
+
+--ALTERNATIVE (cardano cli/node installation)
+https://developers.cardano.org/docs/get-started/installing-cardano-node/
+
+4) upgrade to vasil
+
+https://cardano-node-installation.stakepool247.eu/cardano-node-upgrades/upgrade-to-1.35.0
+
+5) curl -o - https://downloads.csnapshots.io/mainnet/$(curl -s https://downloads.csnapshots.io/mainnet/mainnet-db-snapshot.json| jq -r .[].file_name ) | lz4 -c -d - | tar -x -C /home/cardano/cnode/
+
+6) --BUILD A CLI WALLET
+
+Just run this 2 cmd inside the folder.
+cardano-cli address key-gen --verification-key-file payment.vkey --signing-key-file payment.skey
+[12:25 PM]
+cardano-cli address build --payment-verification-key-file payment.vkey --out-file payment.addr --mainnet
+
+7) --BUILD A TX
+
+—————————
+
+cardano-cli transaction build-raw \
+    --tx-in 75d5220c7e2026abbfbf96c429edd4aa6c0b0fe086bfeceabfd47941a13e0651#0  \
+    --tx-out addr1q9msueaemavdnnkdnvdwwac6hzeqqnckheafajske2l9sc570nnmkhyrjayag7pjvcqy4u4z0ygcxm3apm5zswv2hudsp7wyjy+30000000 \
+    --invalid-hereafter 0 \
+    --fee 0 \
+    --out-file tx.draft
+
+cardano-cli transaction calculate-min-fee \
+    --tx-body-file tx.draft \
+    --tx-in-count 1 \
+    --tx-out-count 2 \
+    --witness-count 1 \
+    --byron-witness-count 0 \
+    --mainnet \
+    --protocol-params-file protocol.json
+
+
+cardano-cli transaction build-raw \
+    --tx-in 75d5220c7e2026abbfbf96c429edd4aa6c0b0fe086bfeceabfd47941a13e0651#0  \
+    --tx-out addr1q9msueaemavdnnkdnvdwwac6hzeqqnckheafajske2l9sc570nnmkhyrjayag7pjvcqy4u4z0ygcxm3apm5zswv2hudsp7wyjy+2826095 \
+    --invalid-hereafter 73003711 \
+    --fee 173905 \
+    --out-file tx.raw
+
+cardano-cli transaction sign \
+    --tx-body-file tx.raw \
+    --signing-key-file payment.skey \
+    --mainnet \
+    --out-file tx.signed

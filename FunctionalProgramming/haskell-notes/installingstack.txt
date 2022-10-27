@@ -1,0 +1,21 @@
+Installing Stack
+
+Currently there is only one reasonable way to install Stack: fetch precompiled binary from the Github.
+
+before_install: # Download and unpack the stack executable - mkdir -p ~/.local/bin - export PATH=$HOME/.local/bin:$PATH - travis_retry curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+- script: |
+    mkdir -p ~/.local/bin
+    curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+  displayName: Install Stack
+  
+  _____________
+  
+  Start your new project:
+stack new my-project
+cd my-project
+stack setup
+stack build
+stack exec my-project-exe
+
+---

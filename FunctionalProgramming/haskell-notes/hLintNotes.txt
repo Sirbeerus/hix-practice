@@ -1,0 +1,19 @@
+Once HLint is installed, run hlint source where source is either a Haskell file, or a directory containing Haskell files.
+
+For example, running HLint over darcs would give:
+
+$ hlint darcs-2.1.2
+
+
+Suggested usage:
+
+HLint usage tends to proceed in three distinct phases:
+
+    Initially, run hlint . --report to generate report.html containing a list of all issues HLint has found. Fix those you think are worth fixing and keep repeating.
+    Once you are happy, run hlint . --default > .hlint.yaml, which will generate a settings file ignoring all the hints currently outstanding. Over time you may wish to edit the list.
+    For larger projects, add custom hints or rules.
+
+Most hints are intended to be a good idea in most circumstances, but not universally - judgement is required. When contributing to someone else's project, HLint can identify pieces of code to look at, but only make changes you consider improvements - not merely to adhere to HLint rules.
+Running with Continuous Integration
+
+On CI you might wish to run hlint . (or hlint src if you only want to check the src directory). To avoid the cost of compilation you may wish to fetch the latest HLint binary release.

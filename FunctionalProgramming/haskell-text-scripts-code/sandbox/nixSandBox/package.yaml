@@ -1,0 +1,11 @@
+name:                nixSandBox
+version:             1.0.0.0
+author:              njc
+maintainer:          @gamil.com
+copyright:           "MIT"
+
+dependencies:
+  - base
+  - servant-server
+library:
+  source-dirs: src

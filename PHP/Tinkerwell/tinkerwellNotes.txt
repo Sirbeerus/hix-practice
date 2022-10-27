@@ -1,0 +1,37 @@
+tinkerwell lets you run code snippets
+it bootstraps laravel behind the scenes
+it's like a mini-IDE
+you can test any php code you want this way
+without having to use an editor to save files and run them on command line
+
+-----------------------------------------------------------------
+
+--tinkerwell( show ada price)
+
+Http::get('https://pool.pm/total.json')->json('ADAUSD');
+
+----------------
+open tinkerwell settings, and point the default path to your ~/Sites/ada path
+settings > advanced > default folder
+select your ada path
+/Applications/Tinkerwell.app/Contents/MacOS
+preferences
+layout: horizontal
+you can change themes, fonts, sizes, etc.. whenever you want to
+
+--------------------
+
+1) 
+
+Http::get('https://api.kanye.rest');
+
+2)
+
+$response = Http::get('https://api.kanye.rest');
+$response->body();
+
+3)
+
+$response = Http::get('https://api.kanye.rest');
+$array = $response->json();
+$array['quote'];

@@ -1,0 +1,4 @@
+https://plutus-pioneer-program.readthedocs.io/en/latest/pioneer/week1.html
+https://cardano.stackexchange.com/
+https://docs.cardano.org/plutus/Plutus-transactions
+https://developers.cardano.org/docs/get-started/running-cardano/#querying-the-cardano-blockchain     (run cardano-node and cardano-cli)

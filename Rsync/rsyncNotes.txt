@@ -1,0 +1,35 @@
+i make a backup copy of my dirs sometimes with rsync.
+rsync -avz Programming/ ProgrammingBak/
+[5:36 PM]
+then I can do whatever I want with Programming/ without worry
+[5:37 PM]
+probably an easier way to do it with Finder
+
+@gary
+i make a backup copy of my dirs sometimes with rsync. rsync -avz Programming/ ProgrammingBak/
+
+Sirbeerus — Today at 5:38 PM
+care to walk me thru this i assume curl
+
+gary — Today at 5:38 PM
+be in the directory above the one you want to backup
+[5:39 PM]
+pwd am I in the programming dir?
+[5:39 PM]
+if I am, i want to cd.. to go to the parent dir or ..
+NEW
+[5:39 PM]
+rsync -avz Programming/  ProgrammingBak/
+[5:39 PM]
+that'll do it
+[5:39 PM]
+i like to use rsync because it can resume where you left off if you got interrupted or had to control-C to stop it
+[5:40 PM]
+rsync will do a comparison check between Programming/ and ProgrammingBak/ and make sure they are mirrored
+[5:40 PM]
+-avz
+ - a, archive
+ - v, verbose
+ - z, gzip/compress the contents between transfers
+[5:41 PM]
+you can skip -z for local only transfers, i usually just leave it, it doesn't hurt

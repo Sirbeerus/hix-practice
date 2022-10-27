@@ -1,0 +1,34 @@
+
+**installation pre req. for plutus   ->       brew install cabal
+
+--> which cabal
+
+cardano-cli --help will bring up the menu
+
+
+------------------------------------------------------
+
+--plutus
+
+A 'Contract' that logs a message.
+
+hello :: Contract () EmptySchema T.Text ()
+hello = logInfo @String "Hello, world"
+
+----------------------------------------------------
+
+-plutus (m1 build/aarch64-darwin q1 2022)
+This guide worked to get me past the server build: https://github.com/renzwo/cardano-plutus-apps-install-m1/blob/main/README.md
+
+$cd plutus-apps      $nix-shell
+$[nix-shell:~/plutus-apps/plutus-playground-server]$ GC_DONT_GC=1 plutus-playground-server
+$[nix-shell:~/plutus-apps/plutus-playground-client]$ GC_DONT_GC=1 npm run start
+https://0.0.0.0:8009
+Terminal command after step 17.. a) control c, stop 2nd shell. Run: npm audit fix (in terminal)ls
+
+--------------------------------------------------------------
+
+1. Write your Plutus **on chain** code.
+2. Serialize your Plutus on chain code to the text envelope format (`cardano-cli` expects this format).
+3. Create your transaction with the accompanying Plutus script(s).
+4. Submit transaction to execute Plutus script.

@@ -1,0 +1,62 @@
+pre req. chrome extension json viewer..
+apis are a mix of both, some private (pay), many are public by design but not promoted and you have to find it yourself
+when you right-click and view source, you can mess with anything and it renders in your browser. it's just interacting with your browser, not the site
+
+i think with apis mostly it's me looking for information... what do I want first? ok i want to know if there's a way I can grab all the listings from jpg.store for a project without scraping it. so i open up my browser and visit jpg.store. i look for any signs of an API available, usually in the footer. if not, i right-click, open developer console (dev console) and click Network tab. from there I look for another tab to filter on XHR requests or Fetch.  Then i reload the page.
+in chrome it's right-click > inspect
+click network
+and Fetch/XHR
+
+footer of the website (not source)
+usually has all the links for developers
+jpg doesn't
+so i open the dev console
+it says to reload, so i'm going to do that now and show you
+all these requests show up now
+
+pick something and look at Preview to see the data
+if you find something you find interesting, click Header to get the request info
+and in your code, you just try to code that request info
+i will do total.json to show you
+Image
+i clicked total.json, that's it so far
+on the right it opened a page showing me the preview
+now i'm going to click Header just to the left of Preview
+and I see this
+Request URL: https://pool.pm/total.json
+so that is an ajax request from jpgstore to pool.pm to grab that json file
+you can just click it too and see the same info
+so pool is providing us with some good info here
+{
+  "supply": 33485132877055530,
+  "circulation": 34376104493876450,
+  "delegations": 1208880,
+  "stake": 24780945755612416,
+  "d": 0,
+  "k": 500,
+  "ADABTC": 0.00002047,
+  "ADAUSD": 0.785358,
+  "ADAEUR": 0.74486,
+  "ADAJPY": 101.97,
+  "ADAGBP": 0.624614,
+  "ADACAD": 1.01,
+  "ADAAUD": 1.11,
+  "ADABRL": 3.91,
+  "tokens": 4602760,
+  "policies": 53261,
+  "load_24h": 0.7612479380498534,
+  "load_1h": 0.9552811325148,
+  "load_5m": 0.9540793678977273
+}
+we can always grab that file if we need to know the conversion rates, how many tokens are listed, how many policies, etc..
+oh and the load averages
+--------------
+it can be useful to think in terms of using GET for retrieving / viewing information and POST for creating / editing information.
+
+---------------------
+
+Search
+
+First things first — you NEED instant operator documentation lookup. If you’re on a Mac, this can be done via Alfred and Dash. Setup is on your own, but to motivate you, searching for a Lens operator like ^. can be done via [cmd]+[space] hs ^..
+
+

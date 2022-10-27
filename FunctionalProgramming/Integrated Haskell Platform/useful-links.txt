@@ -1,0 +1,3 @@
+https://zacwood.me/posts/haskell-scraping-1/  (scraping json data from web, integrate with ihp)
+
+https://ihp.digitallyinduced.com/api-docs/IHP-ValidationSupport-ValidateField.html (IHP API Reference)

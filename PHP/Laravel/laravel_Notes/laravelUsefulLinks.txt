@@ -1,0 +1,15 @@
+--LARAVEL Valet
+https://laravel.com/docs/master/valet#introduction
+
+
+--LARAVEL Frequency/Duration for app/Control/Command/ vim Kernal.php
+
+https://laravel.com/docs/master/scheduling#schedule-frequency-options
+
+
+-- CURRENCY API SITE ENDPOINT 
+https://coinmarketcap.com/api/
+
+apilayer.com
+
+https://pool.pm/total.json 

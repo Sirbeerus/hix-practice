@@ -1,0 +1,265 @@
+https://lambdablob.com/posts/nix-haskell-programming-environment/
+-----------------
+
+stack new myproject github:tweag/nix-integration
+
+
+stack build --file-watch --fast --exec <module-dir>-exe
+
+
+
+To add it to your existing Haskell application, do:
+
+nix flake init -t github:serokell/templates#haskell-cabal2nix
+
+Then run git add flake.nix to add it to the git staging area, otherwise nix will not recognize that the file exists.
+
+-----------
+0) edit with vim  /User/sirbeerus/.stack/config.yaml inside .cabal file ( executables <project> ghc-options. (append -dynamic)  (make file size smaller)
+1) stack new <project>
+2) cd <project>
+3) stack ghci
+4) stack build (after editing main file)
+5) stack exec <project>-exe
+6) import Test.Hspec (.cabal (test suites(build depends  hspec / import Lib inside of test/.spec
+7) stack test
+
+8)stack build --file-watch --fast --exec <project*-exe>
+-- autocompile
+
+
+9)stack test --file-watch --fast
+
+----‐----------------------------------------------
+-- .cabal FILE LAYOUT
+
+name: <my-program>
+version: ...
+
+library
+  exposed-modules:
+      Internal  
+      Lib
+  other-modules:
+      Paths_writingHaskellProgramsUdemy
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable <my-program>
+  hs-source-dirs: src-exec
+  main-is: my-program.hs
+  Build-depends: base, my-program
+
+test-suite tests
+  type: exitcode-stdio-1.0
+  hs-source-dirs: src-test
+  main-is: tests.hs
+  other-modules: ...
+  build-depends: base, my-program, 
+
+
+.cabal contains information on how to build the project.
+---------------------------------------
+
+
+TERMINAL:  cabal install a) <pkg>  --lib
+                         b) wreq
+
+
+           stack build aeson
+ 
+https://stackoverflow.com/questions/12305970/how-to-make-a-haskell-cabal-project-with-libraryexecutables-that-still-run-with/12305972#12305972
+
+
+        stack ghci
+ stack ghc (file name)  -- creates test files
+
+:set prompt ghci>
+
+:set +t -- What the +t does is tell ghci to print the type of an expression after the expression
+
+:module + Data.Ratio
+
+:module - Data.Ratio
+
+:cd /Programming/Haskell/haskell_Text_Code
+
+you can even pass the "+d" option to the ":t" command to see a simpler
+  type.  
+ghci> :t +d (+)
+(+) :: Integer -> Integer -> Integer
+
+--------------------------------------------------
+
+-- TERMINAL (run Haskell files with no main function.)
+
+
+$ runghc <.hs file> (no .hs , name only)
+
+$ ghc -c SimpleJSON.hs
+
+
+The -c option tells ghc to only generate object code. If we were to omit the -c option, the compiler would attempt to generate a complete executable. That would fail, because we haven't written a main function, which GHC calls to start the execution of a standalone program.
+
+-------------------------------------------------
+TEXT EDITOR: <project>.cabal  
+
+build-depends:      base ^>=4.14.3.0,
+		    wreq ^>=0.5.3.3
+
+-----------------------------------
+-- Make it easy to write literal ByteString and Text values.
+{-# LANGUAGE OverloadedStrings #-}
+
+-- allows writing type signatures in places where you can't by default.
+{-# LANGUAGE InstanceSigs #-}
+
+import Data.List
+import System.IO
+import qualified Data.Text as T  (working with text data)
+
+
+
+\n (white space)
+
+---------------------------------------------------------
+
+adding elements to and extracting elements from the
+beginning of a list is much cheaper and faster than working with the
+end of the list.
+-------------------------------------------
+>>> mod <Integer> 10
+>>> <Integer> `mod` 10
+
+(returns last digit of <Integer>)
+
+---------------------------------------------------------
+
+Haskell assigns numeric precedence values to operators, with 1 being the lowest precedence and 9 the highest. A higher-precedence operator is applied before a lower-precedence operator. We can use ghci to inspect the precedence levels of individual operators, using its :info command. No comments
+
+ghci> :info (+)
+
+coercion functions (type inference change):w
+
+
+-------------------------------------------------------------
+HINT: At this point, you may want to be able to enter multi-line strings in
+  GHCi. Start multi-line blocks by typing the ":{" command, and close such blocks
+  using the ":}" command.
+--------------------
+-- GITHUB (examples of foo)
+(inside search (all))
+filename.hs <foo>
+
+-----------------------------
+
+The Setup.hs file is a component of the Cabal build system which Stack uses. It's technically not needed by Stack, but it is still considered good practice in the Haskell world to include it. The file we're using is straight boilerplate:
+
+import Distribution.Simple
+main = defaultMain
+
+----------------------------------
+-- New Project
+
+1) git clone https://github.com/jonascarpay/template-haskell <my-project>
+cd <my-project>
+./wizard.sh
+
+2)cabal init a)remove extra .cabal b) remove extra changeling
+3) stack init/build
+
+
+4) $touch Setup.hs
+import Distribution.Simple
+main = defaultMain
+
+5) edit stack.yaml
+
+nix:
+    enable: true
+    packages:
+        - zlib
+
+6) $touch default.nix (scaffolding)
+
+let
+  # Read in the Niv sources
+  sources = import ./nix/sources.nix {};
+  # If ./nix/sources.nix file is not found run:
+  #   niv init
+  #   niv add input-output-hk/haskell.nix -n haskellNix
+
+  # Fetch the haskell.nix commit we have pinned with Niv
+  haskellNix = import sources.haskellNix {};
+  # If haskellNix is not found run:
+  #   niv add input-output-hk/haskell.nix -n haskellNix
+
+  # Import nixpkgs and pass the haskell.nix provided nixpkgsArgs
+  pkgs = import
+    # haskell.nix provides access to the nixpkgs pins which are used by our CI,
+    # hence you will be more likely to get cache hits when using these.
+    # But you can also just use your own, e.g. '<nixpkgs>'.
+    haskellNix.sources.nixpkgs-unstable
+    # These arguments passed to nixpkgs, include some patches and also
+    # the haskell.nix functionality itself as an overlay.
+    haskellNix.nixpkgsArgs;
+in pkgs.haskell-nix.project {
+  # 'cleanGit' cleans a source directory based on the files known by git
+  src = pkgs.haskell-nix.haskellLib.cleanGit {
+    name = "haskell-nix-project";
+    src = ./.;
+  };
+  # Specify the GHC version to use.
+  compiler-nix-name = "ghc8107"; # Not required for `stack.yaml` based projects.
+}
+
+
+7) touch shell.nix (development shell)
+
+# shell.nix
+let
+  project = import ./default.nix;
+in
+  project.shellFor {
+    # ALL of these arguments are optional.
+
+    # List of packages from the project you want to work on in
+    # the shell (default is all the projects local packages).
+    packages = ps: with ps; [
+      pkga
+      pkgb
+    ];
+
+    # Builds a Hoogle documentation index of all dependencies,
+    # and provides a "hoogle" command to search the index.
+    withHoogle = true;
+
+    # Some common tools can be added with the `tools` argument
+    tools = {
+      cabal = "3.2.0.0";
+      hlint = "latest"; # Selects the latest version in the hackage.nix snapshot
+      haskell-language-server = "latest";
+    };
+    # See overlays/tools.nix for more details
+
+    # Some you may need to get some other way.
+    buildInputs = [ (import <nixpkgs> {}).git ];
+
+    # Sellect cross compilers to include.
+    crossPlatforms = ps: with ps; [
+      ghcjs      # Adds support for `js-unknown-ghcjs-cabal build` in the shell
+      # mingwW64 # Adds support for `x86_64-W64-mingw32-cabal build` in the shell
+    ];
+
+    # Prevents cabal from choosing alternate plans, so that
+    # *all* dependencies are provided by Nix.
+    exactDeps = true;
+  }
+
+
+
+  

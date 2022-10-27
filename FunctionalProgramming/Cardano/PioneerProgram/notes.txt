@@ -1,0 +1,19 @@
+--Terminal (~/plutip Testnet)
+ 
+nix build .#plutip:exe:local-cluster  
+./result/bin/local-cluster -n 2
+
+------------------------------------
+
+1) cd plutus-apps/
+2) run nix-shell
+3
+
+
+https://cardanocommunityhubs.com/plutus/setting-up-the-plutus-playground
+
+https://plutus-community.readthedocs.io/en/latest/#Guides/plutusplayground/
+
+npm install
+
+https://localhost:8009

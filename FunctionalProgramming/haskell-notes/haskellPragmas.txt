@@ -1,0 +1,2 @@
+[InternetShortcut]
+URL=https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/intro.html

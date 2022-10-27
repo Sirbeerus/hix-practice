@@ -1,0 +1,115 @@
+a cronjob is just a job that runs on a schedule. usually every X minutes, etc.
+
+pre req. a)tinkerwell b)laravel
+
+1) open tinkerwell
+
+2)
+
+$api = 'https://server.jpgstoreapis.com/policy/a51b52822dc9fec24c00a110d3ef509b799b06436872714ca4d4a942/listings?page=1';
+
+Http::get($api)->json()a;
+
+
+
+paste that and press CMD + R to run it
+
+(so what you just did was use the jpg.store api to fetch the recent 100 supervirus listings)
+(if you change the word "listings" to "sales" you will fetch the sales instead)
+
+ok let's do something else, i only want to see supervirus listings where the price is 12 ada or less (inside tinkerwell)
+
+$json = Http::get($api)->json();
+collect($json)
+    ->filter(function($item){
+        return $item['price_lovelace'] < 12 * 1000000;
+    });
+
+these are all laravel helpers and methods
+http::get() = super easy to fetch remote apis with the http client
+collect() = excellent way of handling arrays/objects without writing a bunch of similar code
+
+the mechanism that alerts me is an mac command
+
+$phrase = 'Testing';
+$title = 'Notice!';
+$cmd = sprintf('osascript -e \'display notification "%s" with title "%s"\'', $phrase, $title);
+shell_exec($cmd);
+
+you can CMD T to open a new tab in Tinkerwell
+paste those lines and run it
+
+optional* pushover.net
+
+https://laravel.com/docs/master/artisan (scheduler)
+
+----------------------------------------------------------
+
+$api = 'https://pool.pm/wallet/addr1q96pl4zda0hkn550y68muhhar096l2awuf0ey0lxze8w3g4phwzrdqmmk6335x5t48f3vj6ask4a36hj5cc0vs93epfs22mkhj';
+$json = Http::get($api)->json();
+
+that uses pool.pm to fetch a wallet address, and display its data
+you can try pool.pm/wallet/$9876543210
+
+-------------------------------------------------------
+
+cd = change directory
+cd ~/Sites/ada
+vim routes/console.php
+
+ok so that's the format for creating a new terminal or console command
+Artisan::command('', function() { });
+command name, and callback function or anonymous function
+let's do one called "ada" ?
+and we'll fetch that pool.pm/total.json file
+
+ yeah, remember?
+the right-click, inspect... network... dev console
+i saw total.json in the file list and clicked it
+and i clicked header tab to see the request
+https://pool.pm/total.json
+
+Artisan::command('ada', function () {
+    echo Http::get('https://pool.pm/total.json');
+});
+
+save it :w
+in another tab or this tab, whatever you use... type:  php artisan ada
+php artisan <-- prefix to run all artisan commands
+you need to be in the ~/Sites/ada directory where the "artisan" file is
+php is a runtime language, it compiles at runtime
+what did you type?
+php artisan ada
+
+What am I looking at?
+
+json output
+
+whatever you can think of, look at the data that comes back. maybe i just want to know the current ada price
+i can edit the console command to do that
+
+Artisan::command('ada', function () {
+    echo Http::get('https://pool.pm/total.json')->json('ADAUSD');
+});
+
+yes
+alias ada="cd ~/Sites/ada && php artisan ada"
+try that in terminal
+and then just type: ada
+from anywhere on your system
+you can always setup things like that
+Http::get('https://pool.pm/total.json')->json('ADAUSD');
+
+bingo, see how much easier it was to do with tinkerwell?
+I use tinkerwell as a coderunner like this. It helps me figure out what I'm doing. For example if I didn't already know, maybe I would do this
+Http::get('https://pool.pm/total.json');
+try that instead
+i would start out with that statement
+and then I wouldn't get what I wanted from it, so I would look at the docs to see what I can do
+that's where I found ->json()
+and json(optional key) has the ability to add an optional key to narrow in on
+an IDE is helpful in this way where vim is not. I can start to type and it will show me the methods, 1 sec
+Image
+it shows me the methods json(), body(), etc... and I can learn what those do by experimenting with them
+and reading about the Http client here https://laravel.com/docs/master/http-client#introduction
+

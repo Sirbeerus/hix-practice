@@ -1,0 +1,1 @@
+https://subscription.packtpub.com/book/programming/9781786461353/7/ch07lvl1sec62/using-hedis-to-work-with-redis-key-value-list-and-hash (hedis basics)

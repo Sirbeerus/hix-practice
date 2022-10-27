@@ -1,0 +1,275 @@
+Getting Started On macOS
+If you're developing on a Mac and Docker Desktop is already installed, you can use a simple terminal command to create a new Laravel project. For example, to create a new Laravel application in a directory named "example-app", you may run the following command in your terminal:
+curl -s "https://laravel.build/example-app" | bash
+Of course, you can change "example-app" in this URL to anything you like - just make sure the application name only contains alpha-numeric characters, dashes, and underscores. The Laravel application's directory will be created within the directory you execute the command from.
+After the project has been created, you can navigate to the application directory and start Laravel Sail. Laravel Sail provides a simple command-line interface for interacting with Laravel's default Docker configuration:
+cd example-app
+ 
+./vendor/bin/sail up
+The first time you run the Sail up command, Sail's application containers will be built on your local machine. This could take several minutes. Don't worry, subsequent attempts to start Sail will be much faster.
+Once the application's Docker containers have been started, you can access the application in your web browser at: http://localhost
+
+1). cd ~/Sites
+2)laravel new ada
+
+
+think of valet as packaging a web server for you on your own machine instead of a remote hosting company
+think of laravel as someone else built a full enterprise application for you to use to bootstrap your own website
+valet was an easy way to package Nginx, Php, DnsMasq, etc.. for you
+dnsmasq is why you can use ada.test/ in your browser, it routes .test domains to your localhost
+you will mostly never use those again, only during initial setup
+Tinkerwell is an electron app and coderunner. It's easy to test snippets of code, work through problems, etc.
+https://beyondco.de/licenses/tinkerwell
+when you install tinkerwell, i want to show you how to use a cardano api with it
+
+these are all laravel helpers and methods
+http::get() = super easy to fetch remote apis with the http client
+collect() = excellent way of handling arrays/objects without writing a bunch of similar code
+
+
+--------------------------------------------------------------
+
+--TERMINAL (cron tasks notification laravel Sites/personal)
+
+1)  php artisan make:command <target_label>
+
+2)  then you open app/Console/Kernel.php and add your new command to the schedule() method
+https://laravel.com/docs/master/scheduling#schedule-frequency-options
+
+3)  php artisan <signature>
+
+---------------------------------------------------------------
+
+--TERMINAL php -l app/Console/Commands/ViralNFT.php
+
+
+MacBook-Air personal % php -l app/Console/Commands/ViralNFT.php
+No syntax errors detected in app/Console/Commands/ViralNFT.php
+--------------------------------------------------------
+
+gary — 
+you did                                 php artisan make:command NotifyAdaPrice before
+[9:53 PM]
+so you'd just do that for another one:  php artisan make:command ViralNFT
+[9:54 PM]
+then you open app/Console/Kernel.php and add your new command to the schedule() method just like your other one
+[9:55 PM]
+a list of frequency methods you can use instead of everyFifteenMinutes() if you wanted
+https://laravel.com/docs/master/scheduling#schedule-frequency-options
+[9:57 PM]
+that's all you need.
+1. make:command
+2. add it to app/Console/Kernel.php
+[9:57 PM]
+the cronjob stuff you did was only needed once.
+[9:57 PM]
+the Kernel.php::schedule() manager handles everything else
+[9:58 PM]
+just counted mine. I have 49 different command classes
+
+------------------------------------
+
+--TERMINAl php artisan garywisdom
+
+----------------------------------------------
+
+gary —
+laravel helps stub a class for you, for the scheduler (cronjob)
+php artisan make:command NotifyAdaPrice
+[7:58 PM]
+then you'll find in app/Console/Commands/ is the file NotifyAdaPrice.php
+
+ok go back to "personal"
+[8:03 PM]
+php artisan make:command NotifyAdaPrice
+
+--------------------------------------------------
+
+
+open app/Console/Kernel.php
+[9:18 PM]
+find the schedule() method
+[9:18 PM]
+is anything in there?
+
+Sirbeerus — 
+yes..
+
+gary — 
+can you show me how it looks?
+
+Sirbeerus — 
+
+
+gary — 
+ok good we're going to add some code inside there
+[9:20 PM]
+on a new line after the commented line
+[9:21 PM]
+$schedule->command(NotifyAdaPrice::class)->everyFifteenMinutes();
+[9:23 PM]
+now, what is happening is your cronjob runs php artisan schedule:run every 1 minute.
+it executes this schedule() method to see if there is a matching time to run a command
+for every 15 minutes exactly then, it will match your command and it will run it for you
+[9:24 PM]
+when you ran php artisan ada earlier, that's what this is going to do
+[9:24 PM]
+every 15 minutes in the background it's running php artisan ada
+
+------------------------
+
+do you know how to run it?
+
+Sirbeerus — 
+little foggy
+
+gary — 
+php artisan signature
+[11:17 PM]
+signature = whatever you named it
+
+Sirbeerus — 
+-MacBook-Air personal % php artisan garyWisdom
+
+-------------------------------
+
+gary — 
+you could do a range, want to see what that might look like?
+[3:08 PM]
+if ( ! in_array( $floor, range(8,20) ) {
+
+this says send me a notice, if the floor isn't between 8 and 20
+[3:08 PM]
+range(8,20) would build an array of integers 8, 9, 10, 11, 12, ... 20
+[3:08 PM]
+and if the floor isn't one of those values, it won't send you a notice
+[3:09 PM]
+or you could keep it simple, but a little bit more wordy
+
+if ( $floor < 8 || $floor > 20 ) {
+[3:09 PM]
+using the || or operator
+[3:09 PM]
+if floor is less than 8 or floor is greater than 20, send me a notice
+[3:10 PM]
+of course you can change 8 and 20 to whatever values make sense for you
+[3:10 PM]
+and you can copy that whole class as a template to add notices for all the other projects you like
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+--TERMINAL (cron tasks notification laravel Sites/personal)
+
+1)  php artisan make:command <target_label>
+
+2)  then you open app/Console/Kernel.php and add your new command to the schedule() method
+https://laravel.com/docs/master/scheduling#schedule-frequency-options
+
+3)  php artisan <signature>
+
+
+
+
+
+---------------------------------------------
+——————————————————————-----------------------   ----------> code: public function handle() { $response = Http::get('https://<endpoint>')->json();
+
+if ( $floor < 8 || $floor > 20 ) {
+
+
+——————————————————————
+——————————————————————
+
+$response = Http::get('https://api.opencnft.io/1/policy/a51b52822dc9fec24c00a110d3ef509b799b06436872714ca4d4a942/floor_price')->json();
+
+$floor = $response['floor_price'] / 1000000;
+
+if ($floor < 8) {
+    $phrase = 'ViralNFT floor price is: ' . $floor;
+
+    $cmd = sprintf(
+        'osascript -e \'display notification "%s" with title "Alert!"\'',
+        $phrase
+    );
+
+    shell_exec($cmd);
+}
+
+
+
+
+
+
+—————————————————————----------------------
+————————————————————---------------------
+
+$response = Http::get('https://api.opencnft.io/1/policy/a51b52822dc9fec24c00a110d3ef509b799b06436872714ca4d4a942/floor_price');
+
+$assets = $response->json();
+
+  dd($assets['floor_price']);
+
+——————————————————————————-------------------
+————————————————————————--------------------
+
+
+Kernel.php  (imports)
+
+<?php
+
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;                                  
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;                     <--------------
+
+class Kernel extends ConsoleKernel
+{
+
+-----------------------------------------------
+
+
+-----------------------------------------------
+
+<target_label>.php (imports)
+
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Support\Facades\Http;
+use Illuminate\Console\Command;                                                <--------------
+
+class WorldsWithinNFT extends Command
+{
+
+----------------------------------------------------------------------------------------------------------
+
+
+i could use a better understanding of the file we originally messed with. the one with the * * * * * indicating durations. i dont know how that effects things vs the Kernel.php file durations.
+cronjobs, laravel scheduler
+
+Setup involves creating a cronjob like we did with the 5 asterisks which mean (every 1 minute)
+
+so every 1 minute, the terminal will run the cronjob in your schedule() method (Kernel.php)
+[1:39 PM]
+if anything in that schedule() method should run, it will run it at the proper time
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

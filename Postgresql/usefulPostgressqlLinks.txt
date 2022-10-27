@@ -1,0 +1,2 @@
+https://github.com/input-output-hk/cardano-db-sync/blob/master/doc/interesting-queries.md
+

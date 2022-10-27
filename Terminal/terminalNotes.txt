@@ -1,0 +1,97 @@
+apropos(command) search..
+
+-- terminal (shows ada price)
+
+Artisan::command('ada', function () {
+    echo Http::get('https://pool.pm/total.json')->json('ADAUSD');
+});
+
+------------------------------------------------------------
+--ADD NOTE TO TEXT FILE
+
+$ echo "Hello there" >> ~/something.txt
+
+
+--------------------------
+--terminal (remove directories)
+
+using Finder is safer, but if you really want to delete from terminal, rm is what you want
+rm filename
+rm -fr dirname
+rm -r (recursive)
+
+mistakes with "find" are safe, unless you use the -delete flag, this is why we always confirm first, delete after
+---------------------------------------------------------------TERMINAL
+
+ls -la  shows . files
+ls -ltrh  shows file size
+
+cp -R <folder> path/<destination>
+------------------------
+--terminal ()
+Let's switch to our new user:
+sudo su - cardano
+--------------------------------------------------------------------------------------
+--terminal (CARDANO API)
+cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.yaml --port 8090
+ -------------------------------------------------------------------------------------------
+
+--terminal (cardano CLI)
+cardano-cli --version
+cardano-cli - - help
+-------------------------------------------------------------------------------------------
+--terminal (nix)
+nix repl     - - inside fresh Mac terminal
+:?
+
+-------------------------------------------------------------------------------------------
+--TERMINAL(rename a file)
+This example renames example.txt to file.txt:
+
+$ mv example.txt file.txt
+
+Because they both use the same command, you can combine rename with a move. For instance, when moving example.txt to Documents, you could also rename it:
+
+$ mv example.txt ~/Documents/file.txt
+
+---
+pbcopy   (copy in terminal)
+
+BSD (open source license)
+----
+-- SYSTEM PERFORMANCE ENHANCE
+
+If you have 4-16GB of RAM then you should add 8 GB of SWAP space, for larger servers you can double that.
+let's start by creating a SWAP file of 8GB
+sudo fallocate -l 8G /swapfile
+2. Let's change the default permissions so that only the system can read/write to this file
+sudo chmod 600 /swapfile
+3. Creating swap area and enabling the swap space
+sudo mkswap /swapfile
+sudo swapon /swapfile
+4. Let's add this to the system as a permanent solution (so it works also after rebooting the server)
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+5. let's check if the swap is enabled and working
+sudo swapon --show
+now you can also check with the  htop command and you should see the used and total swap space
+
+6. Let's also increase the "swapiness" of the swap space - so the system is using this resource efficiently 
+sudo nano /etc/sysctl.conf
+Add this to the bottom of the file. /etc/sysctl.conf
+vm.swappiness=10
+vm.vfs_cache_pressure=50
+Save this file and exit. (Press CTRL + X, press Y and then press ENTER).
+
+------------------------------------------------------------
+chmod u + x <filename> ( makes executable)
+---------------------------
+
+on my vps i would use "wget" probably
+[5:49 PM]
+or apt-get install
+-------------------------------------------------------
+
+Let's change the default permissions so that only the system can read/write to this file
+sudo chmod 600 /swapfile
+
+----------------------------------------------------------

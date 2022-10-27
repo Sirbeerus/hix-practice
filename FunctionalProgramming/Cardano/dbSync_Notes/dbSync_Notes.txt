@@ -1,0 +1,60 @@
+You can install both GraphQL and postgREST API on top of your own running Cardano Relay Node/db-sync instance.  
+
+Then port forward through your router to your Node to allow external access to it while you have the service running. 
+
+The prerequisite to adding these APIs is running db-sync as a service and already having converted the blockchain history into an SQL database, then adding to it live using the Node and db-sync running in parallel. 
+
+To speed up the process of both setting up your own relay node and db-sync instance, you can download full snapshots of both the Cardano Node db folder data and of the postgresql database up to the end of the most recent Epoch. 
+
+I shall provide links to all shortly.
+
+
+------------------------------------------------------
+
+1. Cashew guide for setting up Non Block Producing Passive Relay Node - https://www.coincashew.com/v/jp/coins/overview-ada/guide-how-to-build-a-haskell-stakepool-node/how-to-setup-an-external-relay-node
+
+2. Resource to download latest snapshot of actual Cardano chain data for the db folder for your Node before running it for the first time (if you get the db folder preloaded with data it will greatly speed up your time taken to get to a Node running live chain data)… - https://csnapshots.io/about
+
+4. Video guide to installing db-sync, postgreSQL, and adding postgREST API on top - https://youtu.be/6Foso3DSw8o
+
+(NB: The latest release of db-sync is 13.0.0 and will be compatible with upcoming Vasil Hardfork - https://github.com/input-output-hk/cardano-db-sync/releases/tag/13.0.0) 
+
+5. Resource for downloading the most recent snapshots of an already converted Cardano Node db folder into SQL state to save you literal days (especially on Mainnet) of conversion time to get up to live conversation for db-sync to operate - 
+
+Testnet - https://updates-cardano-testnet.s3.amazonaws.com/cardano-db-sync/index.html#13/
+
+Mainnet - https://update-cardano-mainnet.iohk.io/cardano-db-sync/index.html#13/
+
+You need to run restore from snapshot command for db-sync and point to the downloaded tar file for it to use.  
+
+6. Set of extremely useful Dev Tools for people wanting to really utilise what's going on under the hood of a Cardano Node in their own coded projects - https://txpipe.io
+
+7. And finally, Ogmios.
+
+Ogmios is a lightweight bridge interface for cardano-node. It offers a WebSockets API that enables local clients to speak Ouroboros' mini-protocols via JSON/RPC - https://ogmios.dev
+
+-- https://postgrest.org/en/v7.0.0/#
+
+-------------------------------------------------------
+
+Hopefully it'll help people roll their own API Servers for program testing purposes.
+
+I will note, the video from the guy showing you how to set up db-sync and postgresql doesn't take you through starting them both as services, so some knowledge will need to exist on how to set these up. 
+
+I may return later with what I did to convert manually started processes into automatically starting services on boot. 
+
+It involves some editing of pre-existing conf files in the 'Scripts' sub-directory as provided by CoinCashew guide for Node installation.
+
+---------------------------------------------------------
+
+so you can see here I got all the new DRRS supremes data in 491ms
+
+1
+[12:05 PM]
+with a single function
+SELECT asset_policy_info('85c6a29c993863d020ccce88c8a5dfc114392da6f5949a3cd462216c');
+
+some good queries in here to learn from https://github.com/cardano-community/guild-operators/tree/a08f243a4fb597f8fbd68dc08e638654b2d8d70a/files/grest/rpc
+[12:08 PM]
+asset_policy_info() above for example is from this:
+https://github.com/cardano-community/guild-operators/blob/a08f243a4fb597f8fbd68dc08e638654b2d8d70a/files/grest/rpc/assets/asset_policy_info.sql
