@@ -1,0 +1,123 @@
+--VIM(terminal/git/vscode/github)
+if you are ready to commit your changes, you would tell git.
+--  " git commit -am hello.hs " 
+
+now you still have to push the changes to the remote origin.
+-- " git push "
+
+---------------------------------------------------------
+
+--github
+
+you looking to "clone the repo" ?
+
+click that github Code button to get the link
+then in nix/terminal try: git clone [LINK]
+git clone git@github.com:input-output-hk/plutus-pioneer-program.git
+
+creates a new dir, Cloning into 'plutus-pioneer-program'
+ls plutus-pioneer-program
+cd plutus-pioneer-program - change dir into the plutus code dir
+ls - list files
+add "learn git basics" and "learn command-line basics, zsh" to your learning list! lol
+there's a lot of experience you'll gain just by doing it every day
+
+I keep all my git stuff in a directory called Code
+so like /Users/gary/code
+then in that dir I do all my cloning from github or elsewhere
+git clone {repo-url}
+
+I always go with SSH
+where you see Https SSH and Github cli
+i copy that link, and type: git clone {link}
+in my code dir
+it downloads it all into a new dir it will create
+
+-----------------------------------------
+
+gary — 03/02/2022
+here's a hosted repository that says you can learn haskell
+https://github.com/bitemyapp/learnhaskell
+GitHub
+GitHub - bitemyapp/learnhaskell: Learn Haskell
+Learn Haskell. Contribute to bitemyapp/learnhaskell development by creating an account on GitHub.
+GitHub - bitemyapp/learnhaskell: Learn Haskell
+at top right I click that green Code button
+Image
+I always go with SSH
+where you see Https SSH and Github cli
+i copy that link, and type: git clone {link}
+in my code dir
+it downloads it all into a new dir it will create
+Image
+now I have all of it in my code/learnhaskell dir
+i added my ssh key to github so that I didn't have to enter credentials each time
+the github cli might be easier too, i don't know
+
+
+----------------------------------------------------
+
+Adding a file to a repository using the command line
+
+
+   1) On your computer, move the file you'd like to upload to GitHub into the local directory that was created when you cloned the repository.
+   2) Open Terminal.
+   3) Change the current working directory to your local repository.
+   4) Stage the file for commit to your local repository.
+
+    $ git add .
+    # Adds the file to your local repository and stages it for commit. To unstage a file, use 'git reset HEAD YOUR-FILE'.
+
+   5) Commit the file that you've staged in your local repository.
+
+    $ git commit -m "Add existing file"
+    # Commits the tracked changes and prepares them to be pushed to a remote repository. To remove this commit and modify the file, use 'git reset --soft HEAD~1' and commit and add the file again.
+
+   6) Push the changes in your local repository to GitHub.com.
+
+    $ git push origin your-branch
+    # Pushes the changes in your local repository up to the remote repository you specified as the origin
+
+
+-- inside folder.     git push
+Fatal error: git remote add <name> <url>
+
+and then push using the remote name
+
+    git push <name>
+
+git push --set-upstream <name> master
+
+git push -f
+
+-------------------------------------------------------------
+
+if you had committed a file, you could try "git restore file"
+
+-------------------------------------------------------------
+
+using "main" is a new thing
+[10:41 PM]
+most github repos will still have a "master" branch
+[10:41 PM]
+if you start using main, that replaces the master branch
+[10:41 PM]
+when someone refers to master branch, if you're using 'main', that's what you would use
+----------------------------
+rm -fr .git (remove git follow on a folder)
+
+git submodule update
+
+git status
+
+-----------------
+-- IGNORE SUBMODULES
+
+git config --global diff.ignoreSubmodules dirty
+
+----------------
+
+-- GIT CLEAN (deleting untracked files)
+
+git clean -df  
+
