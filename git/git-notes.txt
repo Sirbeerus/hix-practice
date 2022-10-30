@@ -90,6 +90,8 @@ git push --set-upstream <name> master
 
 git push -f
 
+https://github.com/github/dev
+
 -------------------------------------------------------------
 
 if you had committed a file, you could try "git restore file"
