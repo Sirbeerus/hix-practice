@@ -96,7 +96,7 @@ https://github.com/github/dev
 
 if you had committed a file, you could try "git restore file"
 
--------------------------------------------------------------
+----------------------------------------------------------------
 
 using "main" is a new thing
 [10:41 PM]
