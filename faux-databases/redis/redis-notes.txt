@@ -1,0 +1,6 @@
+redis-server | redis-cli
+
+How to run --HEDIS
+redis-server --hedis hedis.yml
+
+https://mmhaskell.com/real-world/redis

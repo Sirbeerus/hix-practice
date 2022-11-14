@@ -28,4 +28,5 @@ https://github.com/commercialhaskell/stack/blob/master/doc/GUIDE.md (stack rtfm)
 https://www.stackage.org/snapshots (LTS/Nightly available snapshots)
 https://docs.haskellstack.org/en/stable/nix_integration/#configuration (stack/nix/yaml guide)
 https://cabal.readthedocs.io/en/stable/getting-started.html (cabal guide)
-https://www.haskell.org/onlinereport/haskell2010/haskellch5.html (Haskell 101)
+https://www.haskell.org/onlinereport/haskell2010/haskellch5.html (Haskell 101)a
+https://www.youtube.com/watch?v=eXBwU9ieLL0 (category theory intro)

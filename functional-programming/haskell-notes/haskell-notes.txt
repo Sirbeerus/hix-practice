@@ -3,36 +3,92 @@ https://lambdablob.com/posts/nix-haskell-programming-environment/
 $ touch shell.nix
 
 
-# extended "~/myproject/shell.nix" file
+# minimal ~/abundant-solutions-dev/shell.nix file
 let
-  myNixPkgs = import <nixpkgs> {
-    overlays = [myNixPkgsOverlay];
-  };
-
-  myNixPkgsOverlay = (nixSelf: nixSuper: {
-    myHaskellPackages = nixSelf.haskellPackages.override (oldHaskellPkgs: {
-      overrides = nixSelf.lib.composeExtensions (oldHaskellPkgs.overrides or (_: _: {}))  myHaskellPkgsOverlay;
-    });
-  });
-
-  myHaskellPkgsOverlay = (hSelf: hSuper: {
-    # "myproject" is the first part of the "myproject.cabal" project definition file
-    myProject = hSelf.callCabal2nix "myproject" ./. {};
-  });
+  myNixPkgs = import <nixpkgs> {};
 in
-myNixPkgs.myHaskellPackages.myProject.env
--------------
+myNixPkgs.mkShell {
+  nativeBuildInputs = with myNixPkgs; [
+    cabal-install # terminal app cabal
+    ghc # Haskell compiler
+    haskell-language-server
+    redis
+    ghcid
+    haskellPackages.hedis
+  ];
+}
 
-# import <nixpkgs> {} { git = { name="git-2.25.4"; ... }; ... haskellPackages = { hakyll = { name="hakyll-4.13.0.1"; ... }; ... pandoc = { name="pandoc-2.7.3"; ... }; ... xmonad = { name="xmonad-0.15"; ... }; ... } ... python3Packages = { numpy = ... scipy = ... }; ... nodePackages = ... ... javaPackages = ... ... }
 
 
------------------
+--------------------------------
+
+ghcid Main.hs --run
+
+---------------------------------
+
+cabal exec ghcid
+
+cabal v2-build
+cabal v2-exec -p ghcid
+
+cabal exec ghcid
+
+--------------------------------
+
+GHC only knows about packages that are installed. To see which packages are installed, use the ghc-pkg list command:
+
+ghc-pkg list
+
+-----------------------------
+
+--Globally Installed Packages by Stack
+
+
+
+stack exec ghc-pkg -- list
+
+--------------------------------
+
+--ADDING A PACKAGE TO GHCI
+
+$ redis-cli
+ 
+127.0.0.1:6379> PING
+PONG
+You can also test the same using the hedis package inside the GHCi interpreter as illustrated below:
+
+$ ghci
+GHCi, version 7.6.3: http://www.haskell.org/ghc/ :? for help
+Loading package ghc-prim ... linking ... done.
+Loading package base ... linking ... done.
+ 
+ghci> :m Database.Redis                          <-------------   (-- :m foo)
+ 
+ghci> conn <- connect defaultConnectInfo
+ 
+Loading package array-0.4.0.1 ... linking ... done.
+Loading package base-unicode-symbols-0.2.2.4 ... linking ... done.
+Loading package deepseq-1.3.0.1 ... linking ... done.
+Loading package old-locale-1.0.0.5 ... linking ... done.
+Loading package unix-2.6.0.1 ... linking ... done.
+Loading package network-2.6.0.2 ... linking ... done.
+Loading package resource-pool-0.2.3.2 ... linking ... done.
+Loading package hedis-0.6.5 ... linking ... done.
+ 
+ghci> runRedis conn ping
+Right Pong
+
+
+
+--------------------------------
 
 stack new myproject github:tweag/nix-integration
 
 
 stack build --file-watch --fast --exec <module-dir>-exe
 
+
+$ runghc <.hs file> (no .hs , name only)
 
 
 To add it to your existing Haskell application, do:
