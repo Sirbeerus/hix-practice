@@ -77,7 +77,13 @@ Adding a file to a repository using the command line
 
     $ git push origin your-branch
     # Pushes the changes in your local repository up to the remote repository you specified as the origin
+---------------------------------------------------------
 
+git remote add main https://github.com/Sirbeerus/notes-for-learning-to-program.git
+
+git push main main -f
+
+---------------------------------------------------------
 
 -- inside folder.     git push
 Fatal error: git remote add <name> <url>
