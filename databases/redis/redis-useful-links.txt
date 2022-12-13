@@ -1,0 +1,15 @@
+https://subscription.packtpub.com/book/programming/9781786461353/7/ch07lvl1sec62/using-hedis-to-work-with-redis-key-value-list-and-hash
+
+https://www.opensourceforu.com/2015/05/access-redis-and-postgresql-databases-with-haskell/
+
+https://www.hedis.io/
+
+https://www.cyberciti.biz/faq/how-to-convert-json-to-csv-using-linux-unix-shell/
+
+https://jespinel.com/how-to-read-a-csv-file-using-haskell.html
+
+https://www.youtube.com/watch?v=oPmOfhxbW3g
+
+https://redis.io/docs/manual/cli/#getting-input-from-other-programs (useful commands)
+
+https://stackoverflow.com/questions/47368364/set-json-value-from-file-to-redis (import json to redis)

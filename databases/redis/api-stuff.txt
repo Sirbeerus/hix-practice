@@ -1,0 +1,32 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 CNFT Tools \
+https://cnft.tools/api/external/<policyid>\
+https://cnft.tools/api/external/<policyId>/<assetName>\
+https://cnft.tools/api/rankings/<policyid>\
+\
+JPG Store\
+Sales Endpoint: https://server.jpgstoreapis.com/policy/[POLICYIDHERE]/sales?page=1\
+Listings Endpoint: https://server.jpgstoreapis.com/policy/[POLICYIDHERE]/listings?page=1\
+Verified Endpoint: https://server.jpgstoreapis.com/policy/verified?page=1\
+[12:24 PM]\
+OpenCNFT https://api.opencnft.io/1/\
+[12:25 PM]\
+CnftJungle\
+Owners: https://publicapi.cnftpredator.tools/owners/:policy_id\
+Collection: https://www.cnftjungle.io/_next/data/1b3S4mqMXRCJaGSkcXxHO/collections/:policy_id.json?collection=:policy_id\
+Trait Floors: https://api.cnftjungle.app/utils/traitfloors/:project_id (41097)\
+Assets: https://api.cnftjungle.app/collections/:project_id?page=1&perPage=50&sort=assetNumber&sortDirection=asc&traitFilterLogic=union\
+Analytics: https://cnft-predator.herokuapp.com/get-trait-analytics?collectionId=:project_id&period=month\
+Search: https://api.cnftjungle.app/search?query=zombie%20hunter\
+Asset Sales: https://api.cnftjungle.app/sales/asset/320bb921e517c8111e309b2822633da6c9af346ca4e18b79a94864b3.ZombieHunter00001\
+Asset Info: https://api.cnftjungle.app/assets/asset-info/:asset_id\
+Statistical Rarity sort: https://api.cnftjungle.app/collections/:project_id?page=1&perPage=50&sort=statistical&sortDirection=asc&traitFilterLogic=union\
+[12:25 PM]\
+Blockfrost https://blockfrost.dev/\
+TangoCrypto https://www.tangocrypto.com/}

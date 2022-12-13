@@ -1,0 +1,284 @@
+"$(command-format)"  # must be (json-data) format
+
+$ cat demo.json | jq .
+$ jq . <<< "$(cat demo.json)"
+$ jq . <<< '{"cmd": "jqCmnd"}'
+$ jq . <<< "$(echo '{"cmd": "jqCmnd"}')"
+$ jq .key1.key2.key3 fileName    # must have keys to access
+
+--argjson
+-r # remove quotes from jq output  
+-n #null, making own json 
+$ jq -n --arg x value '$x'
+"value"
+
+$ jq -n --arg x value '[$x]'
+[
+  "value"
+]
+
+$ jq -n --arg x value '{"first": $x}'
+{
+  "first": "value"
+}
+---------------------------------
+----------------------------------
+$ \x="newValue"
+           --no quotes == $\x
+$ jq -n --arg \y $\x '{"\z": $\y}'
+{
+  "\z": "newValue"
+}
+
+---------------------------------
+$ date
+-       --argjson \y "[1,2,3,4]" '$\y'         
+$ jq -n --arg \y "$(date)" '{"\z": $\y}'
+{
+ "\z": "date"
+}
+
+
+         /= 
+
+$ "           "    '$(date)'
+{
+ "\z": "$(date)"
+}
+----------------------------------
+----------------------------------
+
+
+
+
+
+
+curl 'https://cnft.tools/lists/all' | jq  ".[]"  
+
+$ myList=(7 12 23 84)
+
+$ echo "${myList[1]}"
+  7
+
+$ echo "${myList[@]}"
+  7 12 23 84
+
+  or
+
+
+--   $ echo '[7,12,23,84]'
+       [7,12,23,84]
+
+--   $ echo '[7,12,23,84]' | jq '{ "value": .[]}'
+	{
+	  "value": 7
+	}
+	{
+	  "value": 12
+	}
+	{
+	  "value": 23
+	}
+	{
+	  "value": 84
+	}
+
+
+
+
+--   $ echo '[7,12,23,84]' | jq "."                   -- jq '.\x'
+       [
+        7,
+        12,
+        23,
+        84
+       ]
+
+
+--   $ echo '[7,12,23,84]' | jq ".[]"		      -- jq '.\x[]'
+       7
+       12
+       23
+       84
+
+
+--   $ echo '[7,12,23,84]' | jq ".[0]"
+       7
+
+     $ echo '[7,12,23,84]' | jq ".[-1]"
+       84
+
+
+
+
+% jq '.[3].name' demo.json
+"claynation"
+
+% jq '.[].name' demo.json
+"kwic"
+"theapesociety"
+"claynation"
+"themallardorder"
+"spacebudz"
+
+
+
+
+-------------------------------------
+
+-- % cat demo.json | jq 'to_entries | map( {(.value.name): .key}) | add'
+{
+  "kwic": 0,
+  "automaticagenesiseggs": 1,
+  "theapesociety": 2,
+  "claynation": 3,
+
+
+-- % cat demo.json | jq 'to_entries | map( {(.value.name): .key}) | add' | grep zombiechains
+  "zombiechains": 32,
+
+
+-- % cat demo.json | jq '{ "key": .[]}'
+  "key": {
+    "name": "claynation",
+    "projectName": "claynation",
+    "fullName": "Clay Nation",
+    "totalSales": 29882761,
+    "totalVolume": 16695,
+    "sevenDaySales": 269095,
+    "sevenDayVolume": 66,
+    "circulation": 10000,
+    "floorPrice": 3333,
+    "onMarket": 571,
+    "marketPct": 5.71,
+    "sevenDayShort": "269K",
+    "shortName": "Clay Nation"
+  }
+}
+{
+  "key": {
+    "name": "themallardorder",
+    "projectName": "themallardorder",
+    "fullName": "The Mallard Order",
+    "totalSales": 5935442,
+    "totalVolume": 8094,
+    "sevenDaySales": 176578,
+    "sevenDayVolume": 117,
+    "circulation": 6500,
+    "floorPrice": 1230,
+    "onMarket": 459,
+    "marketPct": 7.06,
+    "sevenDayShort": "177K",
+    "shortName": "The Mallard Order"
+  }
+}
+{
+  "key": {
+    "name": "spacebudz",
+    "projectName": "spacebudz",
+    "fullName": "SpaceBudz",
+    "totalSales": 34885296,
+    "totalVolume": 6502,
+    "sevenDaySales": 125071,
+    "sevenDayVolume": 27,
+    "circulation": 10000,
+    "floorPrice": 4050,
+    "onMarket": 856,
+    "marketPct": 8.56,
+    "sevenDayShort": "125K",
+    "shortName": "SpaceBudz"
+  }
+}
+
+
+
+
+-- $ cat demo.json | jq '{ "key": .[0]}'
+{
+  "key": {
+    "name": "kwic",
+    "projectName": "kwic",
+    "fullName": "KWIC - Keyboard Warriors Internet Cafe",
+    "totalSales": 897004,
+    "totalVolume": 4088,
+    "sevenDaySales": 897004,
+    "sevenDayVolume": 4088,
+    "circulation": 8888,
+    "floorPrice": 130,
+    "onMarket": 2344,
+    "marketPct": 26.37,
+    "sevenDayShort": "897K",
+    "shortName": "KWIC - Keyboard W..."
+  }
+}
+
+
+-- $ cat demo.json | jq '{ "key": .[0:3]}'
+
+{
+  "key": [
+    {
+      "name": "kwic",
+      "projectName": "kwic",
+      "fullName": "KWIC - Keyboard Warriors Internet Cafe",
+      "totalSales": 897004,
+      "totalVolume": 4088,
+      "sevenDaySales": 897004,
+      "sevenDayVolume": 4088,
+      "circulation": 8888,
+      "floorPrice": 130,
+      "onMarket": 2344,
+      "marketPct": 26.37,
+      "sevenDayShort": "897K",
+      "shortName": "KWIC - Keyboard W..."
+    },
+    {
+      "name": "automaticagenesiseggs",
+      "projectName": "automaticagenesiseggs",
+      "fullName": "Automatica Genesis Eggs",
+      "totalSales": 834534,
+      "totalVolume": 2541,
+      "sevenDaySales": 834274,
+      "sevenDayVolume": 2539,
+      "circulation": 2000,
+      "floorPrice": 275,
+      "onMarket": 390,
+      "marketPct": 19.5,
+      "sevenDayShort": "834K",
+      "shortName": "Automatica Genesi..."
+    },
+    {
+      "name": "theapesociety",
+      "projectName": "theapesociety",
+      "fullName": "The Ape Society",
+      "totalSales": 24911721,
+      "totalVolume": 12768,
+      "sevenDaySales": 445540,
+      "sevenDayVolume": 37,
+      "circulation": 7000,
+      "floorPrice": 9399,
+      "onMarket": 140,
+      "marketPct": 2,
+      "sevenDayShort": "446K",
+      "shortName": "The Ape Society"
+    }
+  ]
+}
+
+
+jq '.[] | select(.name == "zombiechains" )' demo.json
+{
+  "name": "zombiechains",
+  "projectName": "zombiechains",
+  "fullName": "Zombie Chains",
+  "totalSales": 3737040,
+  "totalVolume": 11750,
+  "sevenDaySales": 14795,
+  "sevenDayVolume": 38,
+  "circulation": 10000,
+  "floorPrice": 174,
+  "onMarket": 607,
+  "marketPct": 6.07,
+  "sevenDayShort": "14.8K",
+  "shortName": "Zombie Chains"
+}

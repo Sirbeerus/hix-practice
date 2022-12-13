@@ -26,6 +26,20 @@ ghcid Main.hs --run
 
 ---------------------------------
 
+
+    build-depends:    base ^>=4.15.1.0
+		    , redis
+		    , hedis
+		    , bytestring
+                    , ghcid
+
+
+
+
+
+
+----------------------------------
+
 cabal exec ghcid
 
 cabal v2-build
@@ -343,6 +357,9 @@ in
     exactDeps = true;
   }
 
+‐-------------------------------------
+‐‐HASKELL TUPLES
 
+lookup(fx) <keyname> <variable (x)>
 
   

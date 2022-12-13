@@ -7,6 +7,19 @@ Artisan::command('ada', function () {
 });
 
 ------------------------------------------------------------
+--ADD DATE PERSONAL CMD
+
+$ add-date foo.txt 
+
+-- /.zshrc
+
+function add-date {
+    mv $1 "$(date +%Y%m%d_%H%M%S)_$1"
+}
+
+$source ~/.zshrc
+
+--------------------------------------------------
 --ADD NOTE TO TEXT FILE
 
 $ echo "Hello there" >> ~/something.txt
@@ -54,7 +67,56 @@ Because they both use the same command, you can combine rename with a move. For 
 
 $ mv example.txt ~/Documents/file.txt
 
----
+---------------------------------------------
+--CURL
+
+$curl --data "log=admin&pwd=password" https://
+
+Admin not a valid usrnm
+
+
+
+
+How to get JSON data with Curl?
+An example of getting JSON data using Curl from the server:
+
+Curl GET JSON Example
+curl https://reqbin.com/echo/get/json
+   -H "Accept: application/json"
+
+How to get XML data using Curl?
+An example of getting XML data using Curl from the server:
+
+Curl GET XML Example
+curl https://reqbin.com/echo/get/xml
+   -H "Accept: application/xml"
+
+How to get the content of an HTML page using Curl?
+An example of getting the content of an HTML page using Curl from the server:
+
+Curl GET HTML Example
+curl https://reqbin.com/echo
+   -H "Accept: text/html"
+
+
+
+
+
+None of the above mentioned solution worked for me due to some reason. Here is my solution. It's pretty basic.
+
+
+
+curl -X GET API_ENDPOINT -H 'Content-Type: application/json' -d 'JSON_DATA'
+
+API_ENDPOINT is your api endpoint e.g: http://127.0.0.1:80/api
+
+-H has been used to added header content.
+
+JSON_DATA is your request body it can be something like :: {"data_key": "value"} . ' ' surrounding JSON_DATA are important.
+
+Anything after -d is the data which you need to send in the GET request
+
+ ----------------------------------------------
 pbcopy   (copy in terminal)
 
 BSD (open source license)

@@ -1,0 +1,12 @@
+site:
+  title: abundant-solutions-dev
+  body: |
+    Welcome to my functional site! An exercise in futility. Join us on discord?
+    perk/mint
+  foot: >>=
+  links:
+    - url: https://developers.cardano.org/
+    - url: https://discord.gg/YSnJrN9wwe
+    - url: https://www.wildtangz.com/vending-machine/
+theme:
+  background-color: grey

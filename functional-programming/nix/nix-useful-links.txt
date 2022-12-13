@@ -11,3 +11,5 @@ https://nixos.wiki/wiki/Overview_of_the_Nix_Language (nix language overview)
 https://learnxinyminutes.com/docs/nix/ (nix lang 101)
 
 https://garnix.io/docs/caching (decr build time) 
+
+http://www.chriswarbo.net/projects/nixos/scripting_with_nix.html

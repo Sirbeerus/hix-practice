@@ -30,3 +30,4 @@ https://docs.haskellstack.org/en/stable/nix_integration/#configuration (stack/ni
 https://cabal.readthedocs.io/en/stable/getting-started.html (cabal guide)
 https://www.haskell.org/onlinereport/haskell2010/haskellch5.html (Haskell 101)a
 https://www.youtube.com/watch?v=eXBwU9ieLL0 (category theory intro)
+https://edu.anarcho-copy.org/Programming%20Languages/Haskell/Practical%20Web%20Development%20with%20Haskell.pdf (Practical Web Development with Haskell PDF)

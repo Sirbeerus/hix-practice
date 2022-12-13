@@ -1,0 +1,304 @@
+--STARTING REDIS SERVER
+
+redis-server | redis-cli
+
+*redis-cli --raw (change output to actual json format) :t object ‐- json.type <key name>
+
+redis-cli AUTH [username] password
+
+127.0.0.1:6379> select 15
+127.0.0.1:6379[15]>
+----------------------------
+--CLOSING REDIS SERVER
+
+redis-cli shutdown
+
+shutdown save
+
+shutdown nosave
+
+flushdb (database)
+----------------------------
+--MULTIPLE KEY DECLARATION
+
+>msetnx (won't overwrite existing key)     <----- Main
+>mset key1 value1 key2 value2 key3 value 3
+>mget key1 key2 key3 (retrieves keys value)
+--------‐----------------------
+-SAFELY RENAME KEY (won't overwrite existing key)
+
+$renamenx <key name> <desired key name> 
+
+0 --fail    1 -- success  -2 --expired TTL
+
+------------------------------------
+--JSON SERIALIZER
+
+set <keyname> '{"thisIs" : "json" , "keyValue" : "Pair"}'
+
+* '' <----- important/encoding
+
+------------------------------------
+--RENAME STRING AT AN INDEX
+
+setrange <key name> <index #> <replacement value>
+
+*if no variable exists redis will create one with fill in characters ("zero padding")
+
+getrange <key> -4 -1 (retrieves end of string)
+----------------------------------
+--DELETE KEYS EFFICIENTLY
+
+>unlink <example:key1> <example:key2>
+--------------------------------
+--COUNTING
+
+incrby num 1 (Integer)
+incrbyfloat num 1 (float)
+incrbyfloat app:fee:cc -1.5 (float)
+-------------------------------
+--MAKING EXPIRING KEYS
+
+setex <key name> <TTL> <key value>
+psetex (milliseconds)
+------‐-----------------------
+--STRING ENCODING TYPES
+
+>object encoding <key name>
+
+* ::
+* :t
+
+Types of Strings 
+1) int : 64-bit *real numbers
+2) embstr : < 44 bytes *more efficient **strings
+3) raw : > 44 bytes *longer strings
+------------------------------------
+--RedisJSON
+
+>json.set <key name> . <'" key value "'>
+>json.get <key name>
+>json.strappend <key name> <'" key value "'>    <------ Main
+>json.numincrby <keyname> <key . path> <value>
+>json.objlen <key name> (how many kv pairs)
+>json.keylen <key name>  (lists keys)
+>json.arrpop <key name> <.sub group> <real number>
+
+* >=24bytes perJSON datatype
+------------------------------------
+--CURL OUTPUT TO FILE
+                                                                                    -- (readable cmds output/pretty print)
+ $curl -o <pwd><chosen file name> http://...   | json__pp   | jq '.'
+
+
+Curl GET JSON Example:
+$ curl https://reqbin.com/echo/get/json -H "Accept: application/json"
+
+Curl GET XML Example:
+$ curl https://reqbin.com/echo/get/xml -H "Accept: application/xml"
+
+Curl GET HTML Example:
+$ curl https://reqbin.com/echo -H "Accept: text/html"
+
+
+
+
+Directory/my-microservice-config/config.json
+
+where the config.json:
+
+{
+  "key" : "value"
+}
+
+...
+
+
+$ redis-cli -x set my-microservice-config < config.json
+OK
+
+For your example, this will store:
+
+$ redis-cli get my-microservice-config
+"{\n      \"key\" : \"value\"\n}\n"
+
+
+To store the compact representation of your JSON data, you can use jq . with -c flag:
+
+$ jq -c . config.json | redis-cli -x set my-microservice-config
+OK
+$ redis-cli get my-microservice-config
+"{\"key\":\"value\"}\n"
+
+
+
+
+
+$ curl -X GET API_ENDPOINT -H 'Content-Type: application/json' -d 'JSON_DATA'
+
+API_ENDPOINT is your api endpoint e.g: http://127.0.0.1:80/api
+
+-H has been used to added header content.
+
+JSON_DATA is your request body it can be something like :: {"data_key": "value"} . ' ' surrounding JSON_DATA are important.
+
+Anything after -d is the data which you need to send in the GET request
+
+
+
+
+MacBook-Air coingecko % ls
+20221122_152839_coingecko-ping			20221122_175301_coingecko-supported-coins-id	README.md
+MacBook-Air coingecko % redis-cli -x set coingecko-coins-id < 20221122_175301_coingecko-supported-coins-id
+OK
+-MacBook-Air coingecko % redis-cli
+127.0.0.1:6379> keys *
+1) "coingecko-coins-id"
+127.0.0.1:6379> get coingecko-coins-id
+"[{\"id\":\"01coin\",\"symbol\":\"zoc\",\"name\":\"01coin\"},{\"id\":\"0-5x-long-algorand-token\",\"symbol\":\"algohalf\",\"name\":\"0.5X Long Algorand\"},{\"id\":\"0-5x-long-altcoin-index-token\",\"symbol\":\"althalf\",\"name\":\"0.5X Long Altcoin Index\"},{\"id\":\"0-5x-long-bitcoin-token\"
+
+
+
+look at the HTTP response headers given by the server. The -i option can be used to enable this feature. The response headers and body will be stored in a single file if you use the -o/-O option in combination with -i.
+
+------------------------------
+--MULTIPLE GET CURL REQUESTS
+
+So the simplest and most efficient (curl will send them all down a single TCP connection [those to the same origin]) approach would be put them all on a single invocation of curl e.g.:
+
+curl http://example.com/?update_=1 http://example.com/?update_=2
+
+
+also
+
+Starting curl version 7.36.0, the --next or -: command-line option allows to chain multiple requests, and usable both in command-line and scripting.
+
+For example:
+
+Sending multiple requests on the same TCP connection:
+curl http://example.com/?update_=1 -: http://example.com/foo
+
+Sending multiple different HTTP requests on the same connection:
+curl http://example.com/?update_=1 -: -d "I am posting this string" http://example.com/?update_=2 
+
+Sending multiple HTTP requests with different curl options for each request:
+curl -o 'my_output_file' http://example.com/?update_=1 -: -d "my_data" -s -m 10 http://example.com/foo -: -o /dev/null http://example.com/random
+
+--------------------------------
+--CURL QUERY PARAMS
+
+
+We can also use query params with the request, by adding them to the URL - The following fetches the posts with userId as 1
+
+curl https://jsonplaceholder.typicode.com/posts?userId=1
+
+We can use mutiple query params separated by an &(ampersand), but the URL string needs to be enclosed within double quotes in this case. The reason is that & is also used to start background jobs from the shell - Without the quotes, the shell would think that it is the end of the command (thereby stop reading the other query params ), and run the curl command in the background.
+
+curl "https://jsonplaceholder.typicode.com/posts?userId=1&id=6"
+
+---‐--------------------------------
+-- CURL POST REQUESTS (multiple)
+
+-H - Used to denote the request headers (cURL uses application/x-www-form-urlencoded as the default Content-Type , when used with the -d parameter. For JSON APIs, we need to the explicitly pass application/json as the Content -Type).
+
+-d - Denotes the request data (API payload). Since the request payload contains double-quotes, the payload need to be enclosed in single-quotes.
+
+-X - Request type (POST, PUT, DELETE, etc)
+
+In case you need to pass multiple headers, use the -H parameter multiple times. For example,
+
+curl -H 'Content-Type: application/json' -H 'My-Header-Name: My-Header-Value' -d '{"userId":1,"id":1,"title":"sample title","body":"sample body"}' -X POST https://jsonplaceholder.typicode.com/posts
+
+---‐-----------------------------------
+-- CURL READ FROM FILE
+
+We can pass a file containing the request payload to the -d option, as below (Create a file named request.json in the current directory and add the request payload, before trying out the command):
+
+curl -d @request.json -H "Content-Type: application/json" https://jsonplaceholder.typicode.com/posts
+
+
+-- CURL READ AND WRITE FROM FILE
+
+If we would like to read request from file, and write response to file:
+
+curl -o response.json -d @request.json -H "Content-Type: application/json" https://jsonplaceholder.typicode.com/posts
+
+-------------------
+
+--Submit JSON Data
+
+We saw how to use cURL to submit POST requests in the previous section. You can also use the --data option to input JSON data. Most servers, on the other hand, anticipate receiving a POST request with key=value pairs similar to the ones we mentioned earlier.
+
+As a result, you'll need to add a header named "Content-Type: application/json" to ensure that the server recognizes that it's working with JSON data and responds accordingly. When uploading JSON, you also don't need to URL-encode the data.
+
+So, suppose you wish to send a POST request to https://httpbin.org/post with the following JSON data:
+
+{ "email": "test@example.com", "name": [ "atatus" ] }
+
+After that, send the data to:
+
+curl --data '{"email":"test@example.com", "name": ["atatus"]}' -H 'Content-Type: application/json' https://httpbin.org/post
+
+In the httpbin.org output, the data appears beneath the JSON value.
+
+You may alternatively save the JSON file and submit it using the same method as before:
+
+curl --data @data.json https://httpbin.org/post
+
+----------------
+
+--Make Authenticated Requests
+
+Some websites and APIs require login and password authentication. There are two options for accomplishing this. With the -u option, you can specify the username and password:
+
+curl -u atatus:@t@tus https://example.com/
+
+Alternatively, you can simply include it in the URL itself, using the format <username>:<password>@<host>, as shown:
+
+curl https://atatus:@t@tus@example.com/
+‐-------------------------
+‐‐CURL KEEP ALIVE CONNECTION
+
+
+curl https://reqbin.com/echo -H "Connection: keep-alive" -H "Keep-Alive: timeout=5, max=100"
+
+Where:
+timeout: sets the maximum timeout to 5 seconds
+max: sets the maximum number of requests per connection to 100
+
+-------------------------
+--CURL MISC
+
+So far, we've seen how to use cURL to make POST requests. Use the -F (“form”) option if you want to upload files using a POST request. We'll send the file test.c here, with the parameter name file:
+
+curl -F file=@test.c https://httpbin.org/post
+
+
+
+-------------------------------------
+Redis Server + Redis Insight
+
+$docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+
+$docker exec -it redis-stack redis-cli
+
+
+
+
+--------------------------------------
+--MISC
+
+*TTL (time to live)
+
+https://insomnia.rest/ (api client)
+https://mmhaskell.com/real-world/redis (type references)
+
+https://hackage.haskell.org/package/rediscaching-haxl 
+
+https://redis.io/docs/stack/search/indexing_json/   (redis cloud index/fetch json)
+
+https://stackoverflow.com/questions/47368364/set-json-value-from-file-to-redis (import json file to redis)
+
+https://stackoverflow.com/questions/21326397/curl-get-request-with-json-parameter
+
+https://hackage.haskell.org/package/curl-1.3.8/docs/Network-Curl.html (Haskell curl lib)

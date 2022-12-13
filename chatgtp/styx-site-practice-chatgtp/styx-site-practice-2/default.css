@@ -1,0 +1,18 @@
+body {
+  background-color: grey;
+  font-family: sans-serif;
+  margin: 40px 0;
+}
+
+
+h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+}

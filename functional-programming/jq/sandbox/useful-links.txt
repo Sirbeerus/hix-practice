@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/52959216/passing-bash-shell-variable-to-jq-filter
+
+https://linuxhint.com/bash_command_output_variable/
+
+https://stackoverflow.com/questions/2642585/read-a-variable-in-bash-with-a-default-value

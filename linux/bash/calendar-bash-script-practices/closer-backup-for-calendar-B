@@ -1,0 +1,61 @@
+#!/bin/bash
+
+clear
+
+# Print calendar
+echo "Today's date is:"
+cal
+
+echo "Enter a filename for your to-do list: "
+read todofile
+
+# Check if file exists
+if [ -f $todofile ]; then
+	echo "File found."
+	echo
+	echo "1. Add to to-do list"
+	echo "2. Complete item from list"
+	echo "3. Delete item from list"
+	echo
+	echo "Please enter a number to select an option: "
+	read option
+
+	if [ $option -eq 1 ]; then
+		echo "What is the item you would like to add to your to-do list? "
+		read item
+		echo $item >> $todofile
+		echo "Item added."
+	elif [ $option -eq 2 ]; then
+		echo "Please enter the item you would like to mark as completed: "
+		read item
+		sed -i "s/$item/[X] $item/" $todofile
+		echo "Item marked as completed."
+	elif [ $option -eq 3 ]; then
+		echo "Please enter the item you would like to delete from your list: "
+		read item
+		sed -i "/$item/d" $todofile
+		echo "Item deleted."
+	else
+		echo "Invalid option."
+	fi
+
+# if file does not exist
+else
+	echo "Creating to-do list file..."
+	touch $todofile
+	echo "File created."
+	echo
+	echo "Please enter the item you would like to add to your to-do list: "
+	read item
+	echo $item >> $todofile
+	echo "Item added."
+fi
+
+echo "Your to-do list has been saved in the file: $todofile"
+
+# Output list to file with date-r format
+cat $todofile | while read line; do
+	echo "`date -r $todofile` $line"
+done > todolist_$(date +"%Y%m%d-%H%M").txt
+
+echo "Your to-do list has been saved in the file: todolist_$(date +"%Y%m%d-%H%M").txt"
