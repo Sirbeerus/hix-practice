@@ -104,6 +104,62 @@ stack build --file-watch --fast --exec <module-dir>-exe
 
 $ runghc <.hs file> (no .hs , name only)
 
+---------------------------------------
+
+niv init
+
+
+#default.nix for haskell project
+
+
+
+let
+  sources = import ../sources.nix {};
+  nixpkgs = import sources.nixpkgs {};
+
+  hsPkgs = nixpkgs.haskell.packages.ghc8102;
+
+  src = builtins.path {
+    name = "haskell-project-src";
+    path = ../../haskell;
+    filter = path: type:
+      let
+        basePath = builtins.baseNameOf path;
+      in
+      basePath != "dist-newstyle"
+    ;
+  };
+
+  project = hsPkgs.callCabal2nix "haskell-project" src;
+in
+hsPkgs.callPackage project {}
+
+
+#nix‐build
+
+
+#shell.nix
+
+
+let
+  sources = import ../sources.nix {};
+  nixpkgs = import sources.nixpkgs {};
+
+  hsPkgs = nixpkgs.haskell.packages.ghc8102;
+
+  project = import ./default.nix;
+in
+nixpkgs.mkShell {
+  name = "cabal-shell";
+  inputsFrom = [ project.env ];
+  buildInputs = [
+    hsPkgs.cabal-install
+  ];
+}
+
+
+-------------‐--------------------------------
+
 
 To add it to your existing Haskell application, do:
 

@@ -9,7 +9,23 @@ https://manpages.ubuntu.com/manpages/bionic/man1/ghc-pkg.1.html
 https://search.nixos.org/packages
  -------------------------------------------------------------
 Upgrade all packages: nix-env -u
+
+If you have installed Nix before but have not updated it for a while, you should update it with:
+
+
+nix-channel --update
+
+Uninstall
+$ nix-env --uninstall hello
+uninstalling 'hello-2.10'
 ---------------------------------------
+--nix flake
+$ nix shell nixpkgs#scala-cli
+$ nix develop # loads the environment
+
+$ scala-cli version
+Scala CLI version: 0.1.16
+Scala version (default): 3.2.0
 
 nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server  -p ghcid -p haskellPackages.wreq -p haskellPackages.lens -p haskellPackages.aeson
 

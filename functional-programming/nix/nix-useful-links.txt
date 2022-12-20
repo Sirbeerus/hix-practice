@@ -13,3 +13,7 @@ https://learnxinyminutes.com/docs/nix/ (nix lang 101)
 https://garnix.io/docs/caching (decr build time) 
 
 http://www.chriswarbo.net/projects/nixos/scripting_with_nix.html
+
+https://nix-community.github.io/nixpkgs-fmt/ (nix formating/nix-shell -p nixpkgs-lint)
+
+https://noogle.dev/  Nix API search engine

@@ -1,3 +1,0 @@
-Run git add flake.nix so that Nix recognizes it.
-
-And finally, run nix develop. This is what replaces the old nix-shell invocation.

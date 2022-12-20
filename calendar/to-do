@@ -1,121 +1,135 @@
-static site with styx/nix
-
-Make a Deployable Static Site Using Styx, Nix, nixops, and deploy to GitHub Pages.
-i am using a mac m1 air, make all files compatible.
-i have nix,styx, nixops and Haskell already installed.
-
-
-my github repo or site name: "abundant-solutions-dev".
-my github name: Sirbeerus.
-my github token:
-
-I want my site to have these features 
-title: abundant-solutions-dev
-body: Welcome to my functional site! An exercise in futility. Join us on discord?
-link to URL: https://developers.cardano.org/
-link to URL: https://discord.gg/YSnJrN9wwe
-link to URL: https://www.wildtangz.com/vending-machine/"
-
-
-label file names, and place all file content together.
-show commands and content needed to create or update files step by step for deployment.
-add comments to steps.
-
-make a bash script that
-1) styx new site abundant-solutions-dev. 
-2) cd abundant-solutions-dev. 
-3)commands to replace conf.nix content for deployment.
-4)commands to replace site.nix content for deployment.
-5)commands to create and needed content for default.nix for deployment if needed.
-6)commands and content to edit static folder.
-
-show the project tree with files.
 
 
 
-#!/bin/bash
+(1)nix proficiency
 
-# step 1: creating the styx site
-styx new site abundant-solutions-dev
 
-# step 2: changing the directory
-cd abundant-solutions-dev
+(a) https://scrive.github.io/nix-workshop/index.html (nix-workshop)
+(b) https://wiki.nikiv.dev/package-managers/nix/ (nix resources and links)
+(c) https://github.com/Gabriella439/haskell-nix  (nix and haskell in production)
 
-# step 3: replacing the content of conf.nix for deployment
-cat > conf.nix <<EOF
+(d)niv-with-flakes
+
+nix flake new -t github:crazazy/niv-flakes <new-dir>
+
+https://github.com/crazazy/niv-flakes
+
+
+
+
+
+(e) nix flakes
+
+A) nix flake init
+
+B) vim flake.nix
+
 {
-  title = "abundant-solutions-dev";
-  links = [
-    { url = "https://developers.cardano.org/"; title = "Cardano Dev Docs"; }
-    { url = "https://discord.gg/YSnJrN9wwe"; title = "Discord"; }
-    { url = "https://www.wildtangz.com/vending-machine/"; title = "Vending Machine"; }
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages.hello = pkgs.hello;
+
+        devShell = pkgs.mkShell { buildInputs = [ pkgs.hello pkgs.cowsay ]; };
+      });
+}
+
+C):wq
+
+D) git add flake.nix
+
+E) nix develop --impure
+
+B1)
+
+{
+  description = "My Nix application";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages.hello = pkgs.hello;
+
+        devShell =
+ pkgs.mkShell {
+   name = "hello-world";
+   buildInputs = with pkgs ; [
+   hello
+   cowsay
+   figlet
   ];
+
+  shellHook = ''
+    echo "Welcome to my awesome shell!" | figlet ;
+  '' ;
+              };
+      });
 }
-EOF
-
-# step 4: replacing the content of site.nix for deployment
-cat > site.nix <<EOF
-{
-  title = "abundant-solutions-dev";
-  description = "Welcome to my functional site! An exercise in futility. Join us on discord?";
-}
-EOF
-
-# step 5: creating and needed content for default.nix for deployment
-cat > default.nix <<EOF
-let
-  # import the conf.nix file
-  conf = import ./conf.nix;
-in {
-  # create the site
-  site = Deployable.staticSite {
-    config = conf;
-  };
-
-  # deploy the site
-  deploy = {
-    # deploy to github
-    github = Deployable.github {
-      name = "Sirbeerus";
-      token = "";
-      repo = "abundant-solutions-dev";
-    };
-  };
-}
-EOF
-
-# step 6: editing the static folder
-mkdir static
-cat > static/index.html <<EOF
-<html>
-  <head>
-    <title>abundant-solutions-dev</title>
-  </head>
-  <body>
-    <h1>Welcome to my functional site! An exercise in futility. Join us on discord?</h1>
-    <ul>
-      <li><a href="https://developers.cardano.org/">Cardano Dev Docs</a></li>
-      <li><a href="https://discord.gg/YSnJrN9wwe">Discord</a></li>
-      <li><a href="https://www.wildtangz.com/vending-machine/">Vending Machine</a></li>
-    </ul>
-  </body>
-</html>
-EOF
-
-# step 7: deploying the site
-nixops deploy --show-trace
-
-**
-
-update steps:
-
-1) cd abundant-solutions-dev.
-2) edit as needed.
-3)styx deploy --github-token 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 --github-user Sirbeerus --github-repo abundant-solutions-dev
-4) nixops deploy --name abundant-solutions-dev
--------------------------------------------------------------------------------
 
 
-c) For `nix-env`, `nix-build`, `nix-shell` or any other Nix command you can add
-         { allowBroken = true; }
-       to ~/.config/nixpkgs/config.nix.
+
+nix profile list
+nix shell nixpkgs#cowsay --command cowsay Hi!
+nix shell nixpkgs#hello
+nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
+git add flake.nix
+nix develop --impure
+
+let system = "aarch64-darwin"; # or whatever system you have
+
+https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
+
+https://std.divnix.com/tutorials/hello-world/index.html
+
+https://serokell.io/blog/practical-nix-flakes
+
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/nix-8-flakes-and-developer-environments/
+
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/
+
+--------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------
+
+(2) make (functional) static site 
+
+(a)https://dataswamp.org/~solene/2017-12-16-announcement-cl-yag.html
+
+(a1)https://search.nixos.org/packages?channel=22.11&show=ecl&from=0&size=50&sort=relevance&type=packages&query=Ecl
+
+(a2)https://search.nixos.org/packages?channel=22.11&from=0&size=50&sort=relevance&type=packages&query=sbcl
+
+(b) https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
+----------------------------------------------------------------------------------------------
+
+
+
+(3) marlowe env/cli/testnet
+
+--------------------------------------------------------------------------------------------
+
+(4)
+
+# Binary Cache for Haskell.nix  
+nix.binaryCachePublicKeys = [
+  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+];
+nix.binaryCaches = [
+  "https://cache.iog.io"
+];  
+ 
+
+
+--------------------------------------------------------------------------------------------
