@@ -12,9 +12,10 @@ $ nix-build flake.nix
 
 $ nix run "github:input-output-hk/haskell.nix#hix" -- init
 
-# MacBook-Air nix % cd nix
+$ cd nix
 
-# MacBook-Air nix % ls
-hix.nix
+$ ls hix.nix
+
+$ cd ..
 
 $ nix run .#hello:exe:hello
